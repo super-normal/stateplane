@@ -5,11 +5,11 @@ from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 from shapely.geometry.point import Point
 import fiona
-from . import dicts
+import dicts
 
 STATEPLANES = []
 
-with fiona.open('/', vfs='zip://' + os.path.join(os.path.dirname(__file__), 'data/stateplane.zip')) as src:
+with fiona.open( os.path.join(os.path.dirname(__file__), 'data/stateplane.shp')) as src:
     for f in src:
         if f['geometry']['type'] == 'MultiPolygon':
             f['geometry'] = MultiPolygon([Polygon(c[0], c[1:]) for c in f['geometry']['coordinates']])
